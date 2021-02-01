@@ -1,5 +1,6 @@
 import random as r
 from itertools import filterfalse
+from itertools import combinations
 import datetime
 clubs = ['San Diego Chargers', 
      'New York Jets', 
@@ -41,16 +42,11 @@ if code!=2:
 hours_=0
 minutes_=0
 for sample in groupedList:
-    print(sample[0], ' - ', sample[1])
-    hours_=r.randint(0, 23)
-    minutes_=r.randint(0, 59)
-    date+=datetime.timedelta(days=14, hours=hours_, minutes=minutes_)
-    print(date.strftime('%d/%m/%y, %H:%M'))
-    date-=datetime.timedelta(hours=hours_, minutes=minutes_)
-    print(sample[2], ' - ', sample[3])
-    hours_=r.randint(0, 23)
-    minutes_=r.randint(0, 59)
-    date+=datetime.timedelta(days=14, hours=hours_, minutes=minutes_)
-    print(date.strftime('%d/%m/%y, %H:%M'))
-    date-=datetime.timedelta(hours=hours_, minutes=minutes_)
+    for pair in combinations(sample, 2):
+        print(pair[0], ' - ', pair[1])
+        hours_=r.randint(0, 23)
+        minutes_=r.randint(0, 59)
+        date+=datetime.timedelta(days=14, hours=hours_, minutes=minutes_)
+        print(date.strftime('%d/%m/%y, %H:%M'))
+        date-=datetime.timedelta(hours=hours_, minutes=minutes_)
 input("Press Enter to continue...")
