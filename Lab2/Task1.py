@@ -1,6 +1,6 @@
 dictionary={}
-file=open('Eng_test.txt', 'r')
-#file=open('Rus_test.txt', 'r')
+#file=open('Eng_test.txt', 'r')
+file=open('Rus_test.txt', 'r')
 lines=file.readlines()
 lines=[line.rstrip() for line in lines]
 for line in lines:
