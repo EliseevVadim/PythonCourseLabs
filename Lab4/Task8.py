@@ -9,8 +9,6 @@ frame = p.DataFrame()
 
 for i in range(0, len(southern)):
     if(southern[i][0]=='-'):
-        #print(data['name'][i])
-        #print(data[data.name == data['name'][i]][data.languages == 'French'])
         frame = frame.append(data[data.name == data['name'][i]][['name', 'capital', 'area', 'currencies', 'latlng']])
 print(frame)
 try:

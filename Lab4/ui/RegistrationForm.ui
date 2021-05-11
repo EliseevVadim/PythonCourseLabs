@@ -31,7 +31,7 @@
 font: 75 32pt &quot;Arial&quot;;</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:26pt; color:#00aa00;&quot;&gt;Авторизация&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:26pt; color:#00aa00;&quot;&gt;Регистрация&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="textFormat">
      <enum>Qt::AutoText</enum>
@@ -81,7 +81,7 @@ font: 14pt &quot;Arial&quot;;</string>
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>220</y>
+      <y>270</y>
       <width>321</width>
       <height>61</height>
      </rect>
@@ -91,27 +91,7 @@ font: 14pt &quot;Arial&quot;;</string>
 font: 75 14pt &quot;Arial&quot;;</string>
     </property>
     <property name="text">
-     <string notr="true">Войти</string>
-    </property>
-    <property name="default">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>300</y>
-      <width>321</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(85, 170, 0);
-font: 75 14pt &quot;Arial&quot;;</string>
-    </property>
-    <property name="text">
-     <string notr="true">Регистрация</string>
+     <string notr="true">Зарегистрироваться</string>
     </property>
     <property name="default">
      <bool>false</bool>
