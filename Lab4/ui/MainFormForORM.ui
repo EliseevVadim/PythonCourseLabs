@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>801</width>
+      <height>581</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Авторы</string>
+     </attribute>
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>800</width>
+        <height>351</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>360</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Удалить</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="addAuthorButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>360</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Добавить</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="removeAuthorButton">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>360</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Удалить</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="searchAuthorsuton">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>460</y>
+        <width>291</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Отобразить авторов, у которых более</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="booksNumField">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>470</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>470</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>книг</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="editAuthorButton">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>360</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Редактировать</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Книги</string>
+     </attribute>
+     <widget class="QTableWidget" name="tableWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>800</width>
+        <height>351</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="addBookButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>360</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Добавить</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="removeBookButton">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>360</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Удалить</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="searchRussianBooks">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>460</y>
+        <width>271</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>Отобразить книги, написанные авторми из России</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="searchBooksByPages">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>460</y>
+        <width>291</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Отобразить книги, которые больше</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="pagesNumField">
+      <property name="geometry">
+       <rect>
+        <x>690</x>
+        <y>470</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>470</y>
+        <width>47</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>страниц</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="editBookButton">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>360</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Редактировать</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Создать таблицы</string>
+    </property>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
