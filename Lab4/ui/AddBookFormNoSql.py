@@ -1,13 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
-from ORLibraryModule import Book
-import sqlalchemy
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
-from ORLibraryModule import Author
-from ORLibraryModule import Book
+from bson.objectid import ObjectId
 
 class AddBookWindow(object):
     def __init__(self, parent):
@@ -15,11 +8,7 @@ class AddBookWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 412)
-        self.path = r'db/ORLibrary.db'
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.engine = sqlalchemy.create_engine('sqlite:///' + self.path, echo = False)
-        Session = sessionmaker(bind = self.engine)
-        self.session = Session()
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(214, 0, 171, 51))
@@ -63,7 +52,7 @@ class AddBookWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.add_record)
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox.setGeometry(QtCore.QRect(180, 270, 69, 22))
+        self.comboBox.setGeometry(QtCore.QRect(180, 270, 169, 22))
         self.comboBox.setEditable(False)
         self.comboBox.setObjectName("comboBox")
         MainWindow.setCentralWidget(self.centralwidget)
@@ -75,23 +64,21 @@ class AddBookWindow(object):
     def fill_combobox(self):
         try:
             self.comboBox.clear()
-            ids = [author.id for author in self.session.query(Author)]
+            ids = [author['_id'] for author in self.__parent.db.authors.find()]
             for id in ids:
                 self.comboBox.addItem(str(id))
         except:
-            pass
-                
+            pass               
     def add_record(self):
         try:
-            book = Book(authors_id = int(self.comboBox.currentText()), name = self.nameField.text(), pages = int(self.pagesField.text()), publisher = self.publishierField.text(), publishing_year = int(self.yearField.text()))
-            engine = sqlalchemy.create_engine('sqlite:///db/ORLibrary.db', echo = False)
-            Session = sessionmaker(bind = engine)
-            session = Session()
-            session.add(book)
-            session.commit()
+            authors_id = ObjectId(self.comboBox.currentText())
+            name = self.nameField.text()
+            pages = int(self.pagesField.text())
+            publisher = self.publishierField.text()
+            publishing_year = int(self.yearField.text())
+            self.__parent.db['books'].insert_one({'authors_id' : authors_id, 'name' : name, 'pages' : pages, 'publisher' : publisher, 'publishing_year' : publishing_year})
             QMessageBox.information(self.main, 'Успех', 'Книга успешно добавлена')
             self.__parent.update_view_for_books()
-            session.close()
             self.main.close()
         except:
             QMessageBox.critical(self.main, 'Ошибка', 'Данные введены неверно')

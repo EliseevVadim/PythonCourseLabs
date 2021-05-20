@@ -3,7 +3,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from ORLibraryModule import Author
 
 
 class EditAuthorWindow(object):
@@ -55,17 +54,17 @@ class EditAuthorWindow(object):
         
     def load(self):
         try:
-            self.lineEdit.setText(self.__author.name)
-            self.lineEdit_2.setText(self.__author.country)
-            self.lineEdit_3.setText(self.__author.years)
+            self.lineEdit.setText(self.__author['name'])
+            self.lineEdit_2.setText(self.__author['country'])
+            self.lineEdit_3.setText(self.__author['years'])
         except:
             pass
     def update(self):
        try:
-            self.__author.name = self.lineEdit.text()
-            self.__author.country = self.lineEdit_2.text()
-            self.__author.years = self.lineEdit_3.text()
-            self.__par.session.commit()
+            name = self.lineEdit.text()
+            country = self.lineEdit_2.text()
+            years = self.lineEdit_3.text()
+            self.__par.authors.update({'name' : self.__author['name'], 'country' : self.__author['country'], 'years' : self.__author['years']}, {'$set' : {'name' : name, 'country' : country, 'years' : years}})            
             self.__par.update_view()
             QMessageBox.information(None, 'Успех', 'Данные обновлены')
             self.main.close()

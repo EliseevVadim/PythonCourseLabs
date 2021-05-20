@@ -2,7 +2,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from ORLibraryModule import Author
 import json
 from bs4 import BeautifulSoup
 import pymongo
@@ -58,7 +57,7 @@ class AddAuthorWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def add_record(self):
-        #try:            
+        try:            
             name = self.lineEdit.text()
             country = self.lineEdit_2.text()
             years = self.lineEdit_3.text()
@@ -66,8 +65,8 @@ class AddAuthorWindow(object):
             QMessageBox.information(self.main, 'Успех', 'Автор успешно добавлен')
             self.__par.update_view()
             self.main.close()            
-        #except:
-            #QMessageBox.critical(self.main, 'Ошибка', 'Данные введены неверно')
+        except:
+            QMessageBox.critical(self.main, 'Ошибка', 'Данные введены неверно')
     def parse(self):
         path = QFileDialog.getOpenFileName(self.main, "Выберите файл", "", "XML files (*.xml);;JSON files (*.json)")[0]
         if path.endswith('.json'):

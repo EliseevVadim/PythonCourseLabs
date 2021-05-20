@@ -2,8 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from ORLibraryModule import Author
-from ORLibraryModule import Book
+from bson.objectid import ObjectId
 
 class EditBookWindow(object):
     def __init__(self, parent, book):
@@ -56,7 +55,7 @@ class EditBookWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.update)
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox.setGeometry(QtCore.QRect(180, 270, 69, 22))
+        self.comboBox.setGeometry(QtCore.QRect(180, 270, 169, 22))
         self.comboBox.setEditable(False)
         self.comboBox.setObjectName("comboBox")
         self.main = MainWindow
@@ -66,31 +65,34 @@ class EditBookWindow(object):
         self.fill_combobox()
         self.load()
     def fill_combobox(self):
-        try:
+       try:
             self.comboBox.clear()
-            ids = [author.id for author in self.__par.session.query(Author)]
+            ids = [author['_id'] for author in self.__par.db.authors.find()]
             for id in ids:
                 self.comboBox.addItem(str(id))
-        except:
-            pass
+       except:
+            pass  
     def load(self):
         try:
-            self.nameField.setText(self.__book.name)
-            self.pagesField.setText(str(self.__book.pages))
-            self.publishierField.setText(self.__book.publisher)
-            self.yearField.setText(str(self.__book.publishing_year))
+            self.nameField.setText(self.__book['name'])
+            self.pagesField.setText(str(self.__book['pages']))
+            self.publishierField.setText(self.__book['publisher'])
+            self.yearField.setText(str(self.__book['publishing_year']))
         except:
             pass
-    def update(self):
-        self.__book.name = self.nameField.text()
-        self.__book.pages = int(self.pagesField.text())
-        self.__book.publisher = int(self.publishierField.text())
-        self.__book.publishing_year = int(self.yearField.text())
-        self.__book.authors_id = int(self.comboBox.currentText())
-        self.__par.session.commit()
-        self.__par.update_view_for_books()
-        QMessageBox.information(None, 'Успех', 'Данные обновлены')
-        self.main.close()
+    def update(self):   
+        try:
+            name = self.nameField.text()
+            pages = int(self.pagesField.text())
+            publisher = self.publishierField.text()
+            publishing_year = int(self.yearField.text())
+            authors_id = ObjectId(self.comboBox.currentText())
+            self.__par.db.books.update({'name' : self.__book['name'], 'pages' : self.__book['pages'], 'publisher' : self.__book['publisher'], 'publishing_year' : self.__book['publishing_year'], 'authors_id' : self.__book['authors_id']}, {'$set' : {'authors_id' : authors_id, 'name' : name, 'pages' : pages, 'publisher' : publisher, 'publishing_year' : publishing_year}})        
+            self.__par.update_view_for_books()
+            QMessageBox.information(None, 'Успех', 'Данные обновлены')
+            self.main.close()
+        except:
+            pass
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))

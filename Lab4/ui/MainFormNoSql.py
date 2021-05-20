@@ -7,7 +7,7 @@ from ui.EditBookFormNoSql import EditBookWindow
 from ui.AddBookFormNoSql import AddBookWindow
 from ui.EditAuthorFormNoSql import EditAuthorWindow
 import pymongo
-from sqlalchemy.orm import sessionmaker
+from bson.objectid import ObjectId
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -141,13 +141,18 @@ class Ui_MainWindow(object):
         self.db = self.client.database
         self.authors = self.db.authors
         self.books = self.db.books
-        QMessageBox.information(None, 'Успех', 'Таблица создана')      
+        QMessageBox.information(None, 'Успех', 'Подключение произошло успешно')      
     def load_authors(self):
-        print(self.authors)
-        authors = self.authors.find({})
-        print(authors)
+        authors = self.db.authors.find()
+        authors_list = [(author['_id'], author['name'], author['country'], author['years']) for author in authors]
+        self.fill_authors_with_list(authors_list)
     def load_books(self):
-        pass
+        try:
+            books = self.db.books.find()
+            books_list = [(book['_id'], book['authors_id'], book['name'], book['pages'], book['publisher'], book['publishing_year']) for book in books]
+            self.fill_books_with_list(books_list)
+        except:
+            pass
     def update_view(self):
         self.tableWidget.clearContents()
         self.load_authors()
@@ -155,9 +160,17 @@ class Ui_MainWindow(object):
         self.tableWidget_2.clearContents()
         self.load_books()
     def open_editing_author(self):
-        pass
+        self.edit_author = QtWidgets.QMainWindow()
+        author = self.db.authors.find({'_id' : ObjectId(self.authors_idx)})[0]
+        self.ui = EditAuthorWindow(self, author)
+        self.ui.setupUi(self.edit_author)
+        self.edit_author.show()
     def open_editing_book(self):
-        pass
+        self.edit_book = QtWidgets.QMainWindow()
+        book = self.db.books.find({'_id' : ObjectId(self.books_idx)})[0]
+        self.ui = EditBookWindow(self, book)
+        self.ui.setupUi(self.edit_book)
+        self.edit_book.show()
     def open_adding_author(self):
         self.add_author = QtWidgets.QMainWindow()
         self.ui = AddAuthorWindow(self)
@@ -184,37 +197,69 @@ class Ui_MainWindow(object):
         self.add_book.show()
     def get_books_idx(self):
         try:
-            self.books_idx = int(self.tableWidget_2.currentItem().text())
+            self.books_idx = self.tableWidget_2.currentItem().text()
         except:
             pass
     def remove_book(self):
         try:
-            pass
+            self.db.books.delete_one({'_id' : ObjectId(self.books_idx)})
+            QMessageBox.information(None, 'Успех', 'Запись успешно удалена')
+            self.update_view_for_books()
         except:
             pass
     def get_authors_idx(self):
         try:
-            self.authors_idx = int(self.tableWidget.currentItem().text())
+            self.authors_idx = self.tableWidget.currentItem().text()
         except:
             pass
     def remove_author(self):
         try:
-            pass
+            self.db.authors.delete_one({'_id' : ObjectId(self.authors_idx)})
+            QMessageBox.information(None, 'Успех', 'Запись успешно удалена')
+            self.update_view()
         except:
             pass
     def filter_by_pages(self):
         try:
-            pass
+            if self.custom_view_books:
+                required_pages = int(self.pagesNumField.text())
+                books = self.db.books.find({'pages' : {'$gt' : required_pages}})
+                books_list = [(book['_id'], book['authors_id'], book['name'], book['pages'], book['publisher'], book['publishing_year']) for book in books]
+                self.fill_books_with_list(books_list)
+                self.searchBooksByPages.setText('Вернуться обратно')
+            else:
+                self.load_books()
+                self.searchBooksByPages.setText('Отобразить книги, которые больше')
+            self.custom_view_books = not self.custom_view_books
         except:
             pass
     def filter_russian(self):
         try:
-            pass
+            if self.custom_view_books:
+                rus_authors_ids = [author['_id'] for author in self.db.authors.find() if author['country'] == 'Russia' or author['country'] == 'Россия']                     
+                books = self.db.books.find()
+                books_list = [(book['_id'], book['authors_id'], book['name'], book['pages'], book['publisher'], book['publishing_year']) for book in books if book['authors_id'] in rus_authors_ids]
+                self.fill_books_with_list(books_list)
+                self.searchRussianBooks.setText('Вернуться обратно')
+            else:
+                self.load_books()
+                self.searchRussianBooks.setText('Отобразить книги, написанные авторми из России') 
+            self.custom_view_books = not self.custom_view_books
         except:
             pass
     def filter_authors(self):
         try:
-            pass
+            if self.custom_view_authors:               
+                b_ids = [book['authors_id'] for book in self.db.books.find()]
+                authors = [(author['_id'], author['name'], author['country'], author['years']) for author in self.db.authors.find()]
+                dictionary = {author: b_ids.count(author[0]) for author in authors}
+                result = [author for author in dictionary.keys() if dictionary[author]>int(self.booksNumField.text())]
+                self.fill_authors_with_list(result)
+                self.searchAuthorsButton.setText('Вернуться обратно')
+            else:
+                self.load_authors()
+                self.searchAuthorsButton.setText('Отобразить авторов, у которых более')
+            self.custom_view_authors = not self.custom_view_authors
         except:
             pass
     def retranslateUi(self, MainWindow):
