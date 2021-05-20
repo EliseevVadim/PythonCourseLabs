@@ -23,3 +23,7 @@ if __name__ == "__main__":
         sys.exit(app.exec_())
     except SystemExit as se:
         print('Program has exited with code {}'.format(se))      
+<<<<<<< HEAD
+=======
+        
+>>>>>>> b82bef8bb18dec56f88a1790464223096a8ce710
